@@ -1,0 +1,12 @@
+#!/bin/bash
+
+profiles=($(cat ~/.aws/credentials | grep -o '\[[^]]*\]' | sed 's/^\[\(.*\)\]$/\1/g'))
+
+for index in ${!profiles[@]}; do
+    echo "[$index]: ${profiles[$index]}"
+done
+
+echo ""
+read -p "Enter index to set profile: " index
+
+export AWS_PROFILE=${profiles[$index]}
