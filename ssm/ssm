@@ -1,0 +1,5 @@
+#!/bin/bash
+
+PROFILE=${AWS_PROFILE:-default}
+
+aws ssm start-session --profile $PROFILE --target $1
