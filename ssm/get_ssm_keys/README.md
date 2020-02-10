@@ -2,6 +2,10 @@
 
 Use AWS Systems Manager Parameter Store to manager SSH access.
 
-Create a paramter to represent the user being used for SSH, e.g. `/ssh/ubuntu`.
+Create a new paramter:
 
-User `StringList` for the type.
+Name: `/ssh/<user>`, e.g. `/ssh/ubuntu`. The user must already exist.
+
+TypeL `StringList`.
+
+Paste your public key into the value.
