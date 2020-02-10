@@ -6,7 +6,7 @@ import boto3
 
 # permissions on script must be owned by root with mode 0755
 '''
-AuthorizedKeysCommand /usr/local/bin/get_ssm_keys %u
+AuthorizedKeysCommand /usr/local/bin/get_ssm_keys.py %u
 AuthorizedKeysCommandUser nobody
 '''
 
