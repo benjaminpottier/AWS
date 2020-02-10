@@ -1,10 +1,10 @@
-# set-aws-profile
+### set-aws-profile
 
 ```bash
 . set-aws-profile
 ```
 
-# ssm
+### ssm
 
 After you've set AWS_PROFILE
 
