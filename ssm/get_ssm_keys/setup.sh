@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get install -y python3-pip
+apt-get update && apt-get install -y python3-pip
 
 python3 -m pip install boto3 requests
 
