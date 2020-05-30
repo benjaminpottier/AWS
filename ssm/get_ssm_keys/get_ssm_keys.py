@@ -33,14 +33,11 @@ def get_region():
     response_json = r.json()
     return response_json.get('region')
 
+
 def get_ssm_keys(user):
     ssm_path = '/ssh/' + user
     c = boto3.client('ssm', region_name=get_region())
-    try:
-        r = c.get_parameter(Name=ssm_path)
-    except Exception as e:
-        print(e, user)
-        sys.exit(1)
+    r = c.get_parameter(Name=ssm_path)
     keys = r['Parameter']['Value'].split(',')
     if not keys:
         return
@@ -48,13 +45,15 @@ def get_ssm_keys(user):
         yield key
 
 
-
 if __name__ == '__main__':
 
     if not len(sys.argv) == 2:
         print("Please supply a user")
         sys.exit(1)
-
-    keys = get_ssm_keys(sys.argv[1])
-    for key in keys:
-         print(key)
+    try:
+        keys = get_ssm_keys(sys.argv[1])
+    except Exception as error:
+        sys.exit(error)
+    else:
+        for key in keys:
+            print(key)
