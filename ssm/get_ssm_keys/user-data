@@ -71,3 +71,5 @@ chown root:root /usr/local/bin/get_ssm_keys.py
 
 echo "AuthorizedKeysCommand /usr/local/bin/get_ssm_keys.py %u" >> /etc/ssh/sshd_config
 echo "AuthorizedKeysCommandUser nobody" >> /etc/ssh/sshd_config
+
+systemctl restart sshd
