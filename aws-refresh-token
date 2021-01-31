@@ -1,0 +1,27 @@
+#!/bin/bash
+
+profile="$AWS_PROFILE"
+role_arn="$(aws iam list-roles --profile $AWS_PROFILE \
+  | jq -r \
+  '.Roles[]|select(.RoleName | startswith("AWSReservedSSO_AWSAdministratorAccess")).Arn')"
+
+user_name=''
+
+request_credentials() {
+  credentials=$(
+    aws sts assume-role \
+      --profile $profile \
+      --role-arn $role_arn \
+      --role-session-name $user_name
+  )
+}
+
+request_credentials
+
+access_key_id=$(echo $credentials | perl -n -e'/"AccessKeyId": "([^,]+)"/ && print $1')
+secret_key_id=$(echo $credentials | perl -n -e'/"SecretAccessKey": "([^,]+)"/ && print $1')
+session_token=$(echo $credentials | perl -n -e'/"SessionToken": "([^,]+)"/ && print $1')
+
+aws configure set --profile "$profile" aws_access_key_id "$access_key_id"
+aws configure set --profile "$profile" aws_secret_access_key "$secret_key_id"
+aws configure set --profile "$profile" aws_session_token "$session_token"
